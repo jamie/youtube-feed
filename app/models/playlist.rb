@@ -3,8 +3,8 @@ class Playlist < ApplicationRecord
 
   normalizes :url, with: ->(url) { url.strip }
 
-  after_create_commit ->(){ PlaylistSyncMetadataJob.perform_later(self) }
-  after_create_commit ->(){ PlaylistUpdateVideosJob.perform_later(self) }
+  after_create_commit -> { PlaylistSyncMetadataJob.perform_later(self) }
+  after_create_commit -> { PlaylistUpdateVideosJob.perform_later(self) }
 
   def sync_metadata
     return if title.presence && channel.presence
@@ -46,7 +46,7 @@ class Playlist < ApplicationRecord
       "contents",
       0,
       "playlistVideoListRenderer",
-      "contents",
+      "contents"
     )
 
     video_list.first(10).each do |record|
@@ -63,7 +63,6 @@ class Playlist < ApplicationRecord
     uri = URI.parse(url)
     page = Net::HTTP.get(uri)
     js = page.match(%r{<script nonce="[^"]*">var ytInitialData = (.*?);</script>})[1]
-    json = JSON.parse(js)
+    JSON.parse(js)
   end
-
 end

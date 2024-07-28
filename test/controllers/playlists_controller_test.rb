@@ -17,7 +17,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create playlist" do
     assert_difference("Playlist.count") do
-      post playlists_url, params: { playlist: { channel: @playlist.channel, title: @playlist.title, url: @playlist.url } }
+      post playlists_url, params: {playlist: {channel: @playlist.channel, title: @playlist.title, url: @playlist.url}}
     end
 
     assert_redirected_to playlist_url(Playlist.last)
@@ -34,7 +34,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update playlist" do
-    patch playlist_url(@playlist), params: { playlist: { channel: @playlist.channel, title: @playlist.title, url: @playlist.url } }
+    patch playlist_url(@playlist), params: {playlist: {channel: @playlist.channel, title: @playlist.title, url: @playlist.url}}
     assert_redirected_to playlist_url(@playlist)
   end
 
