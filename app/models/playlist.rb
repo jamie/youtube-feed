@@ -1,4 +1,6 @@
 class Playlist < ApplicationRecord
+  normalizes :url, with: ->(url) { url.strip }
+
   after_create_commit ->(){ PlaylistSyncMetadataJob.perform_later(self) }
 
   def sync_metadata
