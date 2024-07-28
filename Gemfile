@@ -66,6 +66,11 @@ group :test do
   gem "selenium-webdriver"
 end
 
-# Custom
-gem "http"
+### Custom Gems Follow
+
 gem "solid_queue"
+
+group :test do
+  gem "webmock"
+  gem "vcr"
+end

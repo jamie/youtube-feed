@@ -9,9 +9,7 @@ class Playlist < ApplicationRecord
   def sync_metadata
     return if title.presence && channel.presence
 
-    page = HTTP.get(url)
-    js = page.body.to_s.match(%r{<script nonce="[^"]*">var ytInitialData = (.*?);</script>})[1]
-    json = JSON.parse(js)
+    json = playlist_json
 
     if title.blank?
       self.title = json.dig(
@@ -34,11 +32,7 @@ class Playlist < ApplicationRecord
   end
 
   def update_videos
-    page = HTTP.get(url)
-    js = page.body.to_s.match(%r{<script nonce="[^"]*">var ytInitialData = (.*?);</script>})[1]
-    json = JSON.parse(js)
-
-    video_list = json.dig(
+    video_list = playlist_json.dig(
       "contents",
       "twoColumnBrowseResultsRenderer",
       "tabs",
@@ -62,4 +56,14 @@ class Playlist < ApplicationRecord
       videos << Video.new(videoid:, title:)
     end
   end
+
+  private
+
+  def playlist_json
+    uri = URI.parse(url)
+    page = Net::HTTP.get(uri)
+    js = page.match(%r{<script nonce="[^"]*">var ytInitialData = (.*?);</script>})[1]
+    json = JSON.parse(js)
+  end
+
 end
