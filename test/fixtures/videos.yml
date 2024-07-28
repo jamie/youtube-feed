@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  playlist: one
+  url: MyString
+  title: MyString
+  downloaded_at: 2024-07-28 12:47:40
+
+two:
+  playlist: two
+  url: MyString
+  title: MyString
+  downloaded_at: 2024-07-28 12:47:40
