@@ -4,7 +4,9 @@ class PlaylistTest < ActiveSupport::TestCase
   test "sync_metadata" do
     playlist = Playlist.new(url: "https://www.youtube.com/playlist?list=PL6RLee9oArCArCAjnOtZ17dlVZQxaHG8G")
 
-    playlist.sync_metadata
+    VCR.use_cassette('playlist/sync_metadata') do
+      playlist.sync_metadata
+    end
 
     assert_equal "Group Therapy Radio | Streaming Live Every Friday", playlist.title
     assert_equal "Above & Beyond", playlist.channel
@@ -14,7 +16,9 @@ class PlaylistTest < ActiveSupport::TestCase
     playlist = Playlist.create(url: "https://www.youtube.com/playlist?list=PL6RLee9oArCArCAjnOtZ17dlVZQxaHG8G")
     playlist.videos.create(videoid: "EWVdBuR9Cic")
 
-    playlist.update_videos
+    VCR.use_cassette('playlist/update_videos') do
+      playlist.update_videos
+    end
     playlist.save
 
     assert_equal 10, playlist.videos.count
