@@ -67,4 +67,5 @@ group :test do
 end
 
 # Custom
+gem "http"
 gem "solid_queue"
