@@ -124,7 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_28_195806) do
 
   create_table "videos", force: :cascade do |t|
     t.integer "playlist_id", null: false
-    t.string "url"
+    t.string "videoid"
     t.string "title"
     t.datetime "downloaded_at"
     t.datetime "created_at", null: false

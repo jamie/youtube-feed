@@ -2,12 +2,12 @@
 
 one:
   playlist: one
-  url: MyString
+  videoid: MyString
   title: MyString
   downloaded_at: 2024-07-28 12:47:40
 
 two:
   playlist: two
-  url: MyString
+  videoid: MyString
   title: MyString
   downloaded_at: 2024-07-28 12:47:40

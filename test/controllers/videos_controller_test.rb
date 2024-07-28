@@ -17,7 +17,7 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create video" do
     assert_difference("Video.count") do
-      post videos_url, params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, url: @video.url } }
+      post videos_url, params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, videoid: @video.videoid } }
     end
 
     assert_redirected_to video_url(Video.last)
@@ -34,7 +34,7 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update video" do
-    patch video_url(@video), params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, url: @video.url } }
+    patch video_url(@video), params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, videoid: @video.videoid } }
     assert_redirected_to video_url(@video)
   end
 
