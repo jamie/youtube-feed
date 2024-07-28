@@ -17,7 +17,7 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create video" do
     assert_difference("Video.count") do
-      post videos_url, params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, videoid: @video.videoid } }
+      post videos_url, params: { video: { downloaded_at: @video.downloaded_at, playlist_id: @video.playlist_id, title: @video.title, videoid: "another" } }
     end
 
     assert_redirected_to video_url(Video.last)
