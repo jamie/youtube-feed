@@ -68,6 +68,7 @@ end
 
 ### Custom Gems Follow
 
+gem "net-http"
 gem "solid_queue"
 
 group :test do
