@@ -1,17 +1,7 @@
-<div id="<%= dom_id playlist %>">
-  <p>
-    <strong>Url:</strong>
-    <%= playlist.url %>
-  </p>
-
-  <p>
-    <strong>Title:</strong>
-    <%= playlist.title %>
-  </p>
-
-  <p>
-    <strong>Channel:</strong>
-    <%= playlist.channel %>
-  </p>
-
-</div>
+<td><%= playlist.channel %></td>
+<td><%= link_to playlist.title, playlist.url %></td>
+<td>
+  <% playlist.videos.each do |video| %>
+    <input type="checkbox" <%= "checked" if video.downloaded? %> <%= "disabled" if video.watched? %>>
+  <% end %>
+</td>
