@@ -6,6 +6,9 @@ default: &default
         youtube_sync:
           class: YoutubeSyncJob
           schedule: every 4 hours
+        plex_sync:
+          class: PlexSyncJob
+          schedule: every 2 hours
   workers:
     - queues: "*"
       threads: 1

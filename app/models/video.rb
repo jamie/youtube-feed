@@ -5,6 +5,7 @@ class Video < ApplicationRecord
 
   scope :current, -> { where(deleted_at: nil) }
   scope :to_download, -> { where(downloaded_at: nil) }
+  scope :unwatched, -> { where(watched_at: nil) }
 
   def downloaded? = downloaded_at.present?
 
