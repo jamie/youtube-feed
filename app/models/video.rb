@@ -15,7 +15,7 @@ class Video < ApplicationRecord
   def download!
     # return if downloaded_at?
 
-    path = "#{VIDEO_ROOT}/#{playlist.channel}/#{playlist.title}"
+    path = "#{ENV["VIDEO_ROOT"]}/#{playlist.channel}/#{playlist.title}"
     quality = "bestvideo[vbr<1200]+bestaudio"
     FileUtils.mkdir_p(path)
     puts `cd "#{path}" && yt-dlp -f "#{quality}" "https://youtube.com/watch?v=#{videoid}"`
