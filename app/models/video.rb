@@ -3,9 +3,14 @@ class Video < ApplicationRecord
 
   validates :videoid, uniqueness: true
 
+  scope :current, -> { where(deleted_at: nil) }
   scope :to_download, -> { where(downloaded_at: nil) }
 
   def downloaded? = downloaded_at.present?
+
+  def watched? = watched_at.present?
+
+  def deleted? = deleted_at.present?
 
   def download!
     # return if downloaded_at?
