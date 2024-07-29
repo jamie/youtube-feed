@@ -13,13 +13,14 @@ class PlaylistTest < ActiveSupport::TestCase
   end
 
   test "update_videos" do
-    playlist = Playlist.create(url: "https://www.youtube.com/playlist?list=PL6RLee9oArCArCAjnOtZ17dlVZQxaHG8G")
-    playlist.videos.create(videoid: "EWVdBuR9Cic")
-
+    playlist = nil
     VCR.use_cassette("playlist/update_videos") do
+      playlist = Playlist.create(url: "https://www.youtube.com/playlist?list=PL6RLee9oArCArCAjnOtZ17dlVZQxaHG8G")
+      playlist.videos.create(videoid: "EWVdBuR9Cic")
+
       playlist.update_videos
+      playlist.save
     end
-    playlist.save
 
     assert_equal 10, playlist.videos.count
     assert_match(/Group Therapy/, playlist.videos.last.title)
