@@ -8,7 +8,10 @@ default: &default
           schedule: every 4 hours
         plex_sync:
           class: PlexSyncJob
-          schedule: every 2 hours
+          schedule: every hour
+        cleanup:
+          class: CleanupJob
+          schedule: every day
   workers:
     - queues: "*"
       threads: 1
