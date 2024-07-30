@@ -3,7 +3,7 @@ class Playlist < ApplicationRecord
 
   normalizes :url, with: ->(url) { url.strip }
 
-  before_create -> { PlaylistSyncMetadata.perform_now(self) }
+  before_create -> { PlaylistSyncMetadataJob.perform_now(self) }
   after_create_commit -> { PlaylistUpdateVideosJob.perform_later(self) }
 
   def youtube_json
