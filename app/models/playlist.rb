@@ -49,11 +49,11 @@ class Playlist < ApplicationRecord
       "contents"
     )
 
-    video_list.first(10).each do |record|
+    video_list.first(10).reverse_each do |record|
       videoid = record.dig("playlistVideoRenderer", "videoId")
       title = record.dig("playlistVideoRenderer", "title", "runs", 0, "text")
 
-      videos << Video.new(videoid:, title:)
+      videos.create(videoid:, title:)
     end
   end
 
