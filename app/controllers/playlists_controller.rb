@@ -4,6 +4,9 @@ class PlaylistsController < ApplicationController
   # GET /playlists or /playlists.json
   def index
     @playlists = Playlist.all
+    @weeks = Video.current.pluck(:created_at)
+      .compact.map { _1.strftime("%Y-%U") }.uniq
+      .map { Date.strptime(_1, "%Y-%U") }
   end
 
   # GET /playlists/1 or /playlists/1.json

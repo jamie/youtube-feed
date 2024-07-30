@@ -7,17 +7,21 @@
     <tr>
       <th>Channel</th>
       <th>Playlist</th>
-      <th>Videos</th>
+      <% @weeks.each do |date| %>
+        <th><%= date.strftime("%b %d") %></th>
+      <% end %>
     </tr>
     <% @playlists.each do |playlist| %>
       <tr>
         <td><%= playlist.channel %></td>
         <td><%= link_to playlist.title, playlist.url %></td>
-        <td>
-          <% playlist.videos.current.each do |video| %>
-            <input type="checkbox" <%= "checked" if video.downloaded? %> <%= "disabled" if video.watched? %>>
-          <% end %>
-        </td>
+        <% @weeks.each do |date| %>
+          <td>
+            <% playlist.videos.current.where(created_at: (date)...(date+7)).each do |video| %>
+              <input type="checkbox" <%= "checked" if video.downloaded? %> <%= "disabled" if video.watched? %>>
+            <% end %>
+          </td>
+        <% end %>
         <td><%= link_to "Details", playlist %></td>
       </tr>
     <% end %>
