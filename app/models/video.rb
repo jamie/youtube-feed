@@ -14,7 +14,7 @@ class Video < ApplicationRecord
 
   def deleted? = deleted_at.present?
 
-  def local_path = "#{ENV["VIDEO_ROOT"]}/#{playlist.channel}/#{playlist.title}"
+  def local_path = "#{ENV["VIDEO_ROOT"]}/#{playlist.title.tr("/", "-")}"
 
   def download!
     return if downloaded_at?
