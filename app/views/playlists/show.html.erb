@@ -1,10 +1,66 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @playlist %>
+<%= link_to "Back to playlists", playlists_path %>
 
-<div>
-  <%= link_to "Edit this playlist", edit_playlist_path(@playlist) %> |
-  <%= link_to "Back to playlists", playlists_path %>
+<%= form_with(model: @playlist) do |form| %>
+  <% if @playlist.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(playlist.errors.count, "error") %> prohibited this playlist from being saved:</h2>
 
-  <%= button_to "Destroy this playlist", @playlist, method: :delete %>
-</div>
+      <ul>
+        <% @playlist.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :url, style: "display: block" %>
+    <%= form.text_field :url %>
+  </div>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <%= form.label :channel, style: "display: block" %>
+    <%= form.text_field :channel %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+<%= button_to "Destroy this playlist", @playlist, method: :delete %>
+
+<hr>
+
+<table>
+  <tr>
+    <th>🔻</th>
+    <th>👀</th>
+    <th>❌</th>
+    <th>💾</th>
+    <th></th>
+  </tr>
+  <% @playlist.videos.order("created_at desc").each do |video| %>
+    <tr>
+      <td><%= video.downloaded_at&.strftime("%b %d") %></td>
+      <td><%= video.watched_at&.strftime("%b %d") %></td>
+      <td><%= video.deleted_at&.strftime("%b %d") %></td>
+      <td><%= "✅" if video.on_disk? %></td>
+      <td><%= link_to video.title, video.youtube_url %></td>
+      <td>
+        <%= form_with(model: video) do |form| %>
+          <%= form.hidden_field :downloaded_at, value: nil %>
+          <%= form.hidden_field :watched_at, value: nil %>
+          <%= form.hidden_field :deleted_at, value: nil %>
+          <%= form.submit "Reset" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>

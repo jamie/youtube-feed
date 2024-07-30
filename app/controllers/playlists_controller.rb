@@ -1,5 +1,5 @@
 class PlaylistsController < ApplicationController
-  before_action :set_playlist, only: %i[show edit update destroy]
+  before_action :set_playlist, only: %i[show update destroy]
 
   # GET /playlists or /playlists.json
   def index
@@ -8,15 +8,6 @@ class PlaylistsController < ApplicationController
 
   # GET /playlists/1 or /playlists/1.json
   def show
-  end
-
-  # GET /playlists/new
-  def new
-    @playlist = Playlist.new
-  end
-
-  # GET /playlists/1/edit
-  def edit
   end
 
   # POST /playlists or /playlists.json

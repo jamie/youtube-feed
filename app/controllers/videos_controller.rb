@@ -1,47 +1,14 @@
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[show edit update destroy]
-
-  # GET /videos or /videos.json
-  def index
-    @videos = Video.all
-  end
-
-  # GET /videos/1 or /videos/1.json
-  def show
-  end
-
-  # GET /videos/new
-  def new
-    @video = Video.new
-  end
-
-  # GET /videos/1/edit
-  def edit
-  end
-
-  # POST /videos or /videos.json
-  def create
-    @video = Video.new(video_params)
-
-    respond_to do |format|
-      if @video.save
-        format.html { redirect_to video_url(@video), notice: "Video was successfully created." }
-        format.json { render :show, status: :created, location: @video }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @video.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  before_action :set_video, only: %i[update destroy]
 
   # PATCH/PUT /videos/1 or /videos/1.json
   def update
     respond_to do |format|
       if @video.update(video_params)
-        format.html { redirect_to video_url(@video), notice: "Video was successfully updated." }
+        format.html { redirect_to playlist_url(@video.playlist), notice: "Video was successfully updated." }
         format.json { render :show, status: :ok, location: @video }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to playlist_url(@video.playlist), notice: "Video could not be updated." }
         format.json { render json: @video.errors, status: :unprocessable_entity }
       end
     end
@@ -52,7 +19,7 @@ class VideosController < ApplicationController
     @video.destroy!
 
     respond_to do |format|
-      format.html { redirect_to videos_url, notice: "Video was successfully destroyed." }
+      format.html { redirect_to playlist_url(@video.playlist), notice: "Video was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -66,6 +33,6 @@ class VideosController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def video_params
-    params.require(:video).permit(:playlist_id, :videoid, :title, :downloaded_at)
+    params.require(:video).permit(:playlist_id, :videoid, :title, :downloaded_at, :watched_at, :deleted_at)
   end
 end

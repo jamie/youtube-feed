@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Playlists</h1>
+<iframe width="1280" height="720" src="http://mac-mini---xi.local:32400/web/index.html#!/media/56f69e1c3393c7ac50adb00010da504d5b235b45/com.plexapp.plugins.library?source=9&key=%2Flibrary%2Fsections%2F9%2Fall%3Ftype%3D1%26sort%3DaddedAt%26unwatched%3D1"></iframe>
 
 <div id="playlists">
   <table>
@@ -11,13 +11,25 @@
     </tr>
     <% @playlists.each do |playlist| %>
       <tr>
-        <%= render playlist %>
-        <td><%= link_to "Show playlist", playlist %></td>
+        <td><%= playlist.channel %></td>
+        <td><%= link_to playlist.title, playlist.url %></td>
+        <td>
+          <% playlist.videos.current.each do |video| %>
+            <input type="checkbox" <%= "checked" if video.downloaded? %> <%= "disabled" if video.watched? %>>
+          <% end %>
+        </td>
+        <td><%= link_to "Details", playlist %></td>
       </tr>
     <% end %>
+  </table>
 </div>
 
-<p><%= link_to "New playlist", new_playlist_path %></p>
+<hr>
 
-<iframe width="1280" height="720" src="http://mac-mini---xi.local:32400/web/index.html#!/media/56f69e1c3393c7ac50adb00010da504d5b235b45/com.plexapp.plugins.library?source=9&key=%2Flibrary%2Fsections%2F9%2Fall%3Ftype%3D1%26sort%3DaddedAt%26unwatched%3D1"></iframe>
-
+<%= form_with(model: Playlist.new) do |form| %>
+  <div>
+    <%= form.label :url, "Playlist Url:", style: "display: inline" %>
+    <%= form.text_field :url %>
+    <%= form.submit "Add" %>
+  </div>
+<% end %>

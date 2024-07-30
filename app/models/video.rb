@@ -16,13 +16,17 @@ class Video < ApplicationRecord
 
   def local_path = "#{ENV["VIDEO_ROOT"]}/#{playlist.title.tr("/", "-")}"
 
+  def youtube_url = "https://youtube.com/watch?v=#{videoid}"
+
+  def on_disk? = Dir["#{local_path}/*#{videoid}\\].mp4"].any?
+
   def download!
     return if downloaded_at?
 
     quality = "bestvideo[vbr<1200]+bestaudio"
     FileUtils.mkdir_p(local_path)
-    puts `cd "#{local_path}" && yt-dlp -f "#{quality}" "https://youtube.com/watch?v=#{videoid}"`
-    touch(:downloaded_at)
+    puts `cd "#{local_path}" && yt-dlp -f "#{quality}" #{youtube_url}`
+    touch(:downloaded_at) if on_disk?
   end
 
   def delete_local!

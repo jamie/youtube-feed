@@ -1,7 +1,0 @@
-<td><%= playlist.channel %></td>
-<td><%= link_to playlist.title, playlist.url %></td>
-<td>
-  <% playlist.videos.current.each do |video| %>
-    <input type="checkbox" <%= "checked" if video.downloaded? %> <%= "disabled" if video.watched? %>>
-  <% end %>
-</td>
