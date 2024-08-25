@@ -10,7 +10,7 @@ default: &default
           class: PlexSyncJob
           schedule: every hour
         cleanup:
-          class: CleanupJob
+          class: CleanupOldJob
           schedule: every day
   workers:
     - queues: "*"
