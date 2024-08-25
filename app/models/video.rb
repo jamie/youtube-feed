@@ -18,10 +18,15 @@ class Video < ApplicationRecord
 
   def youtube_url = "https://youtube.com/watch?v=#{videoid}"
 
-  def on_disk? = Dir["#{local_path}/*#{videoid}\\].mp4"].any?
+  def stub_on_disk? = Dir["#{local_path.tr("[]", "?")}/*#{shell_date} \\[#{videoid}\\].mp4"].any?
+
+  def on_disk? = !stub_on_disk? && Dir["#{local_path.tr("[]", "?")}/*#{videoid}\\].mp4"].any?
+
+  def shell_date = "[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]_[0-9][0-9]"
 
   def download!
     return if downloaded_at?
+    Dir["#{local_path}/*#{videoid}*"].each { FileUtils.rm(_1) }
 
     quality = "bestvideo[vbr<1200]+bestaudio"
     FileUtils.mkdir_p(local_path)
