@@ -11,7 +11,7 @@ class PlexSyncJob < ApplicationJob
     json = JSON.parse(response.body)
 
     json.dig("MediaContainer", "Metadata").each do |record|
-      videoid = record["title"].match(/\[(.*)\]/)[1]
+      videoid = record["title"].scan(/\[(.*?)\]/).last[0]
       if record["lastViewedAt"]
         watched_at = Time.at(record["lastViewedAt"].to_i)
         Video.where(videoid:).unwatched.update_all(watched_at:)
